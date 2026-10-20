@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexflow Ops | Automatización de Procesos y Datos B2B</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0A0D14;
+            --bg-card: #121824;
+            --bg-card-hover: #1A2234;
+            --border: #1E293B;
+            --border-glow: #334155;
+            --primary: #38BDF8;
+            --primary-glow: rgba(56, 189, 248, 0.15);
+            --accent: #818CF8;
+            --emerald: #34D399;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --text-dark: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .glow-top {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.05) 50%, rgba(10, 13, 20, 0) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #38BDF8, #818CF8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0A0D14;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #38BDF8, #2563EB);
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0 4rem 0;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #38BDF8, #818CF8, #34D399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 2.5rem auto;
+            font-weight: 400;
+        }
+
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Interactive Dashboard Demo Component */
+        .demo-window {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            margin: 0 auto 5rem auto;
+            text-align: left;
+        }
+
+        .demo-header {
+            background: #0E131F;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .demo-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+
+        .demo-title {
+            margin-left: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .demo-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: #0A0D14;
+        }
+
+        .process-column {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .process-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .process-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .tag-bad {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+        }
+
+        .tag-good {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--emerald);
+        }
+
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #A7F3D0;
+            background: #061810;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            overflow-x: auto;
+        }
+
+        /* Problem / Solution Grid */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.25s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* How it Works / Process */
+        .steps-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+            position: relative;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.75rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: var(--border-glow);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact & Audit CTA Section */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(18, 24, 36, 0.9), rgba(26, 34, 52, 0.9));
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            padding: 3.5rem;
+            text-align: center;
+            margin-bottom: 5rem;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.1);
+        }
+
+        .cta-box h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .demo-body { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-top"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon"><i data-lucide="cpu"></i></div>
+            Nexflow Ops
+        </a>
+        <ul class="nav-links">
+            <li><a href="#soluciones">Soluciones</a></li>
+            <li><a href="#proceso">Cómo Funciona</a></li>
+            <li><a href="#casos">Casos de Uso</a></li>
+        </ul>
+        <a href="#audit" class="btn btn-primary"><i data-lucide="calendar"></i> Agendar Diagnóstico</a>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="badge">
+                <i data-lucide="zap" style="width: 14px; height: 14px;"></i> Automatización B2B basada en Python
+            </div>
+            <h1>Eliminamos las tareas manuales que frenan la <span>operación de tu empresa</span></h1>
+            <p>Diseñamos e instalamos flujos automáticos que conectan tus bases de datos, limpian reportes en Excel/CSV y eliminan los errores humanos en segundos.</p>
+            <div class="hero-cta">
+                <a href="#audit" class="btn btn-primary"><i data-lucide="arrow-right"></i> Auditar mi Proceso Gratis</a>
+                <a href="#demo" class="btn btn-secondary"><i data-lucide="play"></i> Ver Ejemplo en Vivo</a>
+            </div>
+
+            <!-- Demo Interactive Window -->
+            <div class="demo-window" id="demo">
+                <div class="demo-header">
+                    <div class="demo-dot dot-red"></div>
+                    <div class="demo-dot dot-yellow"></div>
+                    <div class="demo-dot dot-green"></div>
+                    <span class="demo-title">nexflow_automation_engine.py — Status: ACTIVE</span>
+                </div>
+                <div class="demo-body">
+                    <div class="process-column">
+                        <div class="process-header">
+                            <span style="font-weight: 600; font-size: 0.9rem;">Antes (Proceso Manual)</span>
+                            <span class="process-tag tag-bad">12 hrs / semana</span>
+                        </div>
+                        <ul style="list-style: none; color: var(--text-muted); font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <li>❌ Descarga manual de 5 portales distintos</li>
+                            <li>❌ Corrección de formatos de fecha y comas</li>
+                            <li>❌ Copiar/pegar a hoja maestra en Excel</li>
+                            <li>❌ Alto riesgo de registros duplicados u omitidos</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-column" style="border-color: rgba(52, 211, 153, 0.3);">
+                        <div class="process-header">
+                            <span style="font-weight: 600; font-size: 0.9rem;">Después (Nexflow Bot)</span>
+                            <span class="process-tag tag-good">3 segundos</span>
+                        </div>
+                        <div class="code-block">
+[14:32:01] INFO: Connecting SQL & Web APIs...<br>
+[14:32:02] SUCCESS: 1,420 rows extracted.<br>
+[14:32:02] CLEAN: Standardizing date formats.<br>
+[14:32:03] DONE: Report generated & sent via Email.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem & Solution Section -->
+        <section id="soluciones">
+            <div class="section-header">
+                <h2>Diseñado para problemas reales de operación</h2>
+                <p>No vendemos licencias complejas. Resolvemos cuellos de botella específicos en tu flujo actual.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="file-spreadsheet"></i></div>
+                    <h3>Limpieza y Unificación de CSV/Excel</h3>
+                    <p>Consolidamos automáticamente reportes heterogéneos provenientes de clientes, proveedores o ERPs en un único formato estandarizado y sin errores.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="database-zap"></i></div>
+                    <h3>Sincronización de Bases de Datos</h3>
+                    <p>Conectamos bases de datos PostgreSQL, MySQL o sistemas legados para mantener tus inventarios y métricas operativas actualizados en tiempo real.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i data-lucide="mail-check"></i></div>
+                    <h3>Generación de Reportes Operativos</h3>
+                    <p>Automatizamos el envío programado de PDFs, alertas críticas o tableros de control ejecutivos directamente a los tomadores de decisión.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="proceso">
+            <div class="section-header">
+                <h2>Cómo trabajamos juntos</h2>
+                <p>Un modelo transparente, directo y orientado 100% a resultados medibles.</p>
+            </div>
+
+            <div class="steps-wrapper">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Diagnóstico Operativo</h3>
+                    <p>Auditamos el proceso manual actual de tu equipo (tiempos, pasos y herramientas utilizadas) en una sesión de 15 minutos.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Desarrollo del Script</h3>
+                    <p>Programamos el motor de automatización en Python adaptado exactamente a tus reglas de negocio sin alterar tus sistemas.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Implementación y Ahorro</h3>
+                    <p>Desplegamos el flujo automático, capacitamos a tu equipo y garantizamos horas recuperadas desde el primer día.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Audit -->
+        <section id="audit" class="cta-box">
+            <h2>¿Cuánto tiempo está perdiendo tu equipo hoy?</h2>
+            <p>Agenda un diagnóstico operativo gratuito de 15 minutos. Identificaremos la tarea manual que más tiempo les quita y te mostraremos cómo automatizarla.</p>
+            <a href="mailto:hola@nexflowops.com" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                <i data-lucide="calendar"></i> Agendar Diagnóstico Gratuito
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Nexflow Ops — Soluciones de Automatización Operativa B2B. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
