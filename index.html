@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luis Zermeño | Automatización B2B & Eficiencia Operativa</title>
+    <meta name="description" content="Automatizo las tareas manuales y repetitivas de pequeñas y medianas empresas en México: reportes en Excel, facturas, inventarios, conciliaciones y más.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
             --bg-dark: #0A0D14;
@@ -17,6 +18,7 @@
             --primary-glow: rgba(56, 189, 248, 0.15);
             --accent: #818CF8;
             --emerald: #34D399;
+            --whatsapp: #25D366;
             --text-main: #F8FAFC;
             --text-muted: #94A3B8;
             --text-dark: #64748B;
@@ -28,6 +30,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-dark);
@@ -36,13 +42,17 @@
             overflow-x: hidden;
         }
 
+        section[id] {
+            scroll-margin-top: 1.5rem;
+        }
+
         /* Ambient Glow Backgrounds */
         .glow-top {
             position: absolute;
             top: -150px;
             left: 50%;
             transform: translateX(-50%);
-            width: 800px;
+            width: min(800px, 100vw);
             height: 450px;
             background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.05) 50%, rgba(10, 13, 20, 0) 100%);
             pointer-events: none;
@@ -54,6 +64,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
             padding: 1.5rem 5%;
             max-width: 1280px;
             margin: 0 auto;
@@ -102,9 +113,27 @@
             color: var(--primary);
         }
 
+        .nav-links .mobile-only {
+            display: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 8px;
+            width: 42px;
+            height: 42px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
@@ -114,6 +143,12 @@
             transition: all 0.2s ease;
             cursor: pointer;
             border: none;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
 
         .btn-primary {
@@ -136,6 +171,17 @@
         .btn-secondary:hover {
             background: var(--bg-card-hover);
             border-color: var(--border-glow);
+        }
+
+        .btn-whatsapp {
+            background: var(--whatsapp);
+            color: #06281A;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.15);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.3);
         }
 
         /* Container Layout */
@@ -181,6 +227,7 @@
         .hero h1 span {
             background: linear-gradient(135deg, #38BDF8, #818CF8, #34D399);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -195,6 +242,7 @@
         .hero-cta {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 1rem;
             margin-bottom: 4rem;
         }
@@ -223,6 +271,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
 
         .dot-red { background: #FF5F56; }
@@ -234,6 +283,9 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .demo-body {
@@ -249,12 +301,14 @@
             padding: 1.5rem;
             border-radius: 10px;
             border: 1px solid var(--border);
+            min-width: 0;
         }
 
         .process-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 0.75rem;
             margin-bottom: 1rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--border);
@@ -266,6 +320,7 @@
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .tag-bad {
@@ -289,7 +344,7 @@
             overflow-x: auto;
         }
 
-        /* Problem / Solution Grid */
+        /* Section headers */
         .section-header {
             text-align: center;
             margin-bottom: 3.5rem;
@@ -298,17 +353,20 @@
         .section-header h2 {
             font-size: 2.25rem;
             font-weight: 700;
+            line-height: 1.25;
             margin-bottom: 0.75rem;
         }
 
         .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
             gap: 1.5rem;
             margin-bottom: 6rem;
         }
@@ -350,10 +408,144 @@
             font-size: 0.95rem;
         }
 
+        /* Use Cases */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .case-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.25s ease;
+        }
+
+        .case-card:hover {
+            border-color: var(--border-glow);
+            background: var(--bg-card-hover);
+        }
+
+        .case-top {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            background: rgba(129, 140, 248, 0.12);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .case-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .case-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .case-row {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            padding-left: 0.85rem;
+            border-left: 2px solid var(--border-glow);
+            margin-bottom: 0.85rem;
+        }
+
+        .case-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .case-row strong {
+            display: block;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.15rem;
+        }
+
+        .case-row.before strong { color: #F87171; }
+        .case-row.after { border-left-color: rgba(52, 211, 153, 0.5); color: var(--text-main); }
+        .case-row.after strong { color: var(--emerald); }
+
+        .cases-note {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 6rem;
+        }
+
+        .cases-note a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .cases-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* PDF Guide download */
+        .guide-box {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.25rem 2.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .guide-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .guide-box h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .guide-box p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
         /* How it Works / Process */
         .steps-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
             gap: 2rem;
             margin-bottom: 6rem;
             position: relative;
@@ -365,6 +557,15 @@
             padding: 1.75rem;
             border-radius: 12px;
             position: relative;
+        }
+
+        .step-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         .step-number {
@@ -389,6 +590,7 @@
         .cta-box h2 {
             font-size: 2.25rem;
             font-weight: 700;
+            line-height: 1.25;
             margin-bottom: 1rem;
         }
 
@@ -399,19 +601,135 @@
             font-size: 1.1rem;
         }
 
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .cta-buttons .btn {
+            font-size: 1.05rem;
+            padding: 1rem 2rem;
+        }
+
+        .cta-box .cta-contact {
+            margin: 1.75rem auto 0 auto;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .cta-contact a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .cta-contact a:hover {
+            color: var(--primary);
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 50;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: var(--whatsapp);
+            color: #06281A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.07);
+        }
+
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+        }
+
         /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 3rem 0;
+            padding: 3rem 0 5rem 0;
             color: var(--text-dark);
             font-size: 0.9rem;
             text-align: center;
         }
 
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-contact a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            .guide-box {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+                gap: 1.25rem;
+                padding: 2rem 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
+            nav { padding: 1.25rem 16px; }
+            .container { padding: 0 16px; }
+            .hero { padding: 3rem 0 3rem 0; }
             .hero h1 { font-size: 2.25rem; }
-            .demo-body { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .hero p { font-size: 1.05rem; }
+            .hero-cta .btn { width: 100%; }
+            .demo-body { grid-template-columns: 1fr; padding: 1rem; gap: 1rem; }
+            .section-header h2, .cta-box h2 { font-size: 1.75rem; }
+            .cta-box { padding: 2.5rem 1.25rem; }
+            .cta-buttons .btn { width: 100%; }
+            .nav-cta { display: none; }
+            .menu-toggle { display: inline-flex; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 16px;
+                right: 16px;
+                flex-direction: column;
+                gap: 0;
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 0.5rem;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.open { display: flex; }
+
+            .nav-links a {
+                display: block;
+                padding: 0.85rem 1rem;
+                border-radius: 8px;
+            }
+
+            .nav-links a:hover { background: var(--bg-card-hover); }
+            .nav-links .mobile-only { display: block; }
         }
     </style>
 </head>
@@ -425,12 +743,17 @@
             <div class="logo-icon">LZ</div>
             Luis Zermeño
         </a>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
             <li><a href="#soluciones">Soluciones</a></li>
-            <li><a href="#proceso">Cómo Funciona</a></li>
             <li><a href="#casos">Casos de Uso</a></li>
+            <li><a href="#guia">Guía PDF</a></li>
+            <li><a href="#proceso">Cómo Funciona</a></li>
+            <li class="mobile-only"><a href="#audit">Agendar Diagnóstico</a></li>
         </ul>
-        <a href="#audit" class="btn btn-primary"><i data-lucide="calendar"></i> Agendar Diagnóstico</a>
+        <a href="#audit" class="btn btn-primary nav-cta"><i data-lucide="calendar"></i> Agendar Diagnóstico</a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
     </nav>
 
     <div class="container">
@@ -439,8 +762,8 @@
             <div class="badge">
                 <i data-lucide="zap" style="width: 14px; height: 14px;"></i> Automatización B2B para mejorar la eficiencia de tu negocio
             </div>
-            <h1>Eliminamos las tareas manuales que frenan la <span>operación de tu empresa</span></h1>
-            <p>Diseñamos e instalamos flujos automáticos que conectan tus bases de datos, limpian reportes en Excel/CSV y eliminan los errores humanos en segundos.</p>
+            <h1>Elimino las tareas manuales que frenan la <span>operación de tu empresa</span></h1>
+            <p>Diseño e instalo flujos automáticos que conectan tus bases de datos, limpian tus reportes en Excel/CSV y evitan errores humanos, en segundos.</p>
             <div class="hero-cta">
                 <a href="#audit" class="btn btn-primary"><i data-lucide="arrow-right"></i> Auditar mi Proceso Gratis</a>
                 <a href="#demo" class="btn btn-secondary"><i data-lucide="play"></i> Ver Ejemplo en Vivo</a>
@@ -488,54 +811,150 @@
         <section id="soluciones">
             <div class="section-header">
                 <h2>Diseñado para problemas reales de operación</h2>
-                <p>No vendemos licencias complejas. Resolvemos cuellos de botella específicos en tu flujo actual.</p>
+                <p>No vendo licencias complejas. Resuelvo cuellos de botella específicos en tu flujo actual.</p>
             </div>
 
             <div class="grid-3">
                 <div class="card">
                     <div class="card-icon"><i data-lucide="file-spreadsheet"></i></div>
                     <h3>Limpieza y Unificación de CSV/Excel</h3>
-                    <p>Consolidamos automáticamente reportes heterogéneos provenientes de clientes, proveedores o ERPs en un único formato estandarizado y sin errores.</p>
+                    <p>Consolido automáticamente reportes heterogéneos de clientes, proveedores o ERPs en un único formato estandarizado y sin errores.</p>
                 </div>
 
                 <div class="card">
                     <div class="card-icon"><i data-lucide="database-zap"></i></div>
                     <h3>Sincronización de Bases de Datos</h3>
-                    <p>Conectamos bases de datos PostgreSQL, MySQL o sistemas legados para mantener tus inventarios y métricas operativas actualizados en tiempo real.</p>
+                    <p>Conecto bases de datos PostgreSQL, MySQL o sistemas legados para mantener tus inventarios y métricas operativas siempre actualizados.</p>
                 </div>
 
                 <div class="card">
                     <div class="card-icon"><i data-lucide="mail-check"></i></div>
                     <h3>Generación de Reportes Operativos</h3>
-                    <p>Automatizamos el envío programado de PDFs, alertas críticas o tableros de control ejecutivos directamente a los tomadores de decisión.</p>
+                    <p>Automatizo el envío programado de PDFs, alertas críticas o tableros de control directamente a quienes toman las decisiones.</p>
                 </div>
             </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section id="casos">
+            <div class="section-header">
+                <h2>Casos comunes en empresas mexicanas</h2>
+                <p>Si alguna de estas tareas te suena familiar, es muy probable que se pueda automatizar. No necesitas cambiar de sistema ni saber de programación.</p>
+            </div>
+
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="receipt"></i></div>
+                        <h3>Facturas del SAT (CFDI)</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Se descargan los XML y PDF uno por uno y se capturan a mano en Excel para el contador.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Las facturas se leen solas y quedan en un concentrado con RFC, fecha, subtotal, IVA y total.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="landmark"></i></div>
+                        <h3>Conciliación bancaria</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Alguien compara a ojo el estado de cuenta contra facturas y pagos, renglón por renglón.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>El sistema cruza movimientos y facturas y te marca solo lo que no cuadra.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="boxes"></i></div>
+                        <h3>Inventario en varios lugares</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Las existencias viven en un Excel, el punto de venta y la tienda en línea, y nunca coinciden.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Un solo inventario actualizado y un aviso cuando un producto está por agotarse.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="trending-up"></i></div>
+                        <h3>Reporte de ventas semanal</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Cada lunes se juntan los archivos de sucursales o vendedores para armar el reporte.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>El reporte consolidado llega solo a tu correo el lunes a primera hora.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="file-text"></i></div>
+                        <h3>Cotizaciones y remisiones</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Se llenan a mano en Word o Excel, copiando precios y recalculando totales cada vez.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Capturas los datos una vez y sale el PDF con tu formato, folio y totales correctos.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="clock"></i></div>
+                        <h3>Asistencia y prenómina</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Se pasan a mano los registros del checador para calcular faltas, retardos y horas extra.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Un concentrado de asistencia por empleado, listo para revisar y pagar la nómina.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="bell-ring"></i></div>
+                        <h3>Cobranza y recordatorios</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Se revisa quién debe y se escribe a cada cliente uno por uno para recordarle su pago.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Una lista de saldos vencidos y recordatorios por correo que salen con tu visto bueno.</div>
+                </div>
+
+                <div class="case-card">
+                    <div class="case-top">
+                        <div class="case-icon"><i data-lucide="inbox"></i></div>
+                        <h3>Pedidos por correo y formularios</h3>
+                    </div>
+                    <div class="case-row before"><strong>Hoy</strong>Los pedidos llegan por distintos lados y se copian a una hoja, con riesgo de perder alguno.</div>
+                    <div class="case-row after"><strong>Automatizado</strong>Todos los pedidos quedan ordenados en un solo lugar, con fecha, cliente y estatus.</div>
+                </div>
+            </div>
+
+            <p class="cases-note">¿Tu caso no está aquí? <a href="#audit">Cuéntamelo y lo revisamos juntos</a>.</p>
+        </section>
+
+        <!-- PDF Guide -->
+        <section id="guia" class="guide-box">
+            <div class="guide-icon"><i data-lucide="file-down"></i></div>
+            <div>
+                <h2>¿No sabes por dónde empezar?</h2>
+                <p>Descarga la guía de una página con 6 señales para detectar qué procesos de tu negocio se pueden automatizar.</p>
+            </div>
+            <a href="Descargables/Gu%C3%ADa%20de%20Automatizaci%C3%B3n%20-%20Luis%20Zermeno.pdf" download="Guia de Automatizacion - Luis Zermeno.pdf" class="btn btn-primary">
+                <i data-lucide="download"></i> Descargar PDF para identificar problemas
+            </a>
         </section>
 
         <!-- How It Works -->
         <section id="proceso">
             <div class="section-header">
                 <h2>Cómo trabajamos juntos</h2>
-                <p>Un modelo transparente, directo y orientado 100% a resultados medibles.</p>
+                <p>Un modelo transparente, directo y orientado a resultados medibles.</p>
             </div>
 
             <div class="steps-wrapper">
                 <div class="step-card">
                     <div class="step-number">01</div>
                     <h3>Diagnóstico Operativo</h3>
-                    <p>Auditamos el proceso manual actual de tu equipo (tiempos, pasos y herramientas utilizadas) en una sesión de 15 minutos.</p>
+                    <p>Revisamos juntos el proceso manual actual de tu equipo (tiempos, pasos y herramientas) en una sesión de 15 minutos.</p>
                 </div>
 
                 <div class="step-card">
                     <div class="step-number">02</div>
                     <h3>Desarrollo a la Medida</h3>
-                    <p>Programamos el motor de automatización adaptado exactamente a tus reglas de negocio sin alterar tus sistemas.</p>
+                    <p>Programo la automatización adaptada a las reglas de tu negocio, sin alterar los sistemas que ya usas.</p>
                 </div>
 
                 <div class="step-card">
                     <div class="step-number">03</div>
-                    <h3>Implementación y Ahorro</h3>
-                    <p>Desplegamos el flujo automático, capacitamos a tu equipo y garantizamos horas recuperadas desde el primer día.</p>
+                    <h3>Implementación y Seguimiento</h3>
+                    <p>Instalo el flujo automático y capacito a tu equipo. Medimos juntos el tiempo ahorrado y te acompaño las primeras semanas para hacer los ajustes necesarios.</p>
                 </div>
             </div>
         </section>
@@ -543,20 +962,54 @@
         <!-- Call to Action Audit -->
         <section id="audit" class="cta-box">
             <h2>¿Cuánto tiempo está perdiendo tu equipo hoy?</h2>
-            <p>Agenda un diagnóstico operativo gratuito de 15 minutos. Identificaremos la tarea manual que más tiempo les quita y te mostraremos cómo automatizarla.</p>
-            <a href="mailto:contacto@luiszermeno.com" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
-                <i data-lucide="calendar"></i> Agendar Diagnóstico Gratuito
-            </a>
+            <p>Agenda un diagnóstico operativo gratuito de 15 minutos. Identificamos la tarea manual que más tiempo les quita y te muestro cómo se puede automatizar.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/522221138904?text=Hola%20Luis%2C%20me%20interesa%20un%20diagn%C3%B3stico%20gratuito%20para%20automatizar%20un%20proceso." target="_blank" rel="noopener" class="btn btn-whatsapp">
+                    <i data-lucide="message-circle"></i> Escribir por WhatsApp
+                </a>
+                <a href="mailto:info@luiszer.com?subject=Diagn%C3%B3stico%20gratuito%20de%20automatizaci%C3%B3n" class="btn btn-primary">
+                    <i data-lucide="mail"></i> Agendar por correo
+                </a>
+            </div>
+            <p class="cta-contact">
+                <a href="mailto:info@luiszer.com">info@luiszer.com</a> &nbsp;·&nbsp; <a href="tel:+522221138904">+52 222 113 8904</a>
+            </p>
         </section>
 
         <!-- Footer -->
         <footer>
+            <div class="footer-contact">
+                <a href="mailto:info@luiszer.com">info@luiszer.com</a>
+                <a href="https://wa.me/522221138904" target="_blank" rel="noopener">WhatsApp: +52 222 113 8904</a>
+            </div>
             <p>&copy; 2026 Luis Zermeño — Consultoría & Automatización B2B. Todos los derechos reservados.</p>
         </footer>
     </div>
 
+    <!-- Floating WhatsApp button -->
+    <a href="https://wa.me/522221138904?text=Hola%20Luis%2C%20me%20interesa%20automatizar%20un%20proceso%20de%20mi%20negocio." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Escribir por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+    </a>
+
     <script>
-        lucide.createIcons();
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
     </script>
 </body>
 </html>
