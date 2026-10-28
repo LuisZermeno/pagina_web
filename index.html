@@ -576,6 +576,139 @@
             margin-bottom: 0.5rem;
         }
 
+        /* About */
+        .about {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3.5rem;
+            align-items: start;
+            margin-bottom: 6rem;
+        }
+
+        .about-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(129, 140, 248, 0.18));
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-initials {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #38BDF8, #818CF8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-name {
+            margin-top: 1.25rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .about-role {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .about-location {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-top: 0.35rem;
+        }
+
+        .about-location svg {
+            width: 16px;
+            height: 16px;
+            color: var(--primary);
+        }
+
+        .about-linkedin {
+            margin-top: 1.1rem;
+            width: 100%;
+        }
+
+        .about-linkedin svg {
+            color: #0A66C2;
+        }
+
+        .about-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .about h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .about-text p strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .about-pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .pillar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .pillar svg {
+            width: 22px;
+            height: 22px;
+            color: var(--emerald);
+            margin-bottom: 0.6rem;
+        }
+
+        .pillar h3 {
+            font-size: 0.98rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .pillar p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
         /* Contact & Audit CTA Section */
         .cta-box {
             background: linear-gradient(135deg, rgba(18, 24, 36, 0.9), rgba(26, 34, 52, 0.9));
@@ -689,6 +822,25 @@
                 gap: 1.25rem;
                 padding: 2rem 1.5rem;
             }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-card {
+                max-width: 260px;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            .about-pillars {
+                grid-template-columns: 1fr;
+            }
+
+            .about-location {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -748,6 +900,7 @@
             <li><a href="#casos">Casos de Uso</a></li>
             <li><a href="#guia">Guía PDF</a></li>
             <li><a href="#proceso">Cómo Funciona</a></li>
+            <li><a href="#sobre-mi">Sobre mí</a></li>
             <li class="mobile-only"><a href="#audit">Agendar Diagnóstico</a></li>
         </ul>
         <a href="#audit" class="btn btn-primary nav-cta"><i data-lucide="calendar"></i> Agendar Diagnóstico</a>
@@ -959,6 +1112,50 @@
             </div>
         </section>
 
+        <!-- About -->
+        <section id="sobre-mi" class="about">
+            <div class="about-card">
+                <div class="about-photo">
+                    <!-- Para usar tu foto: reemplaza la línea de abajo por
+                         <img src="foto-luis.jpg" alt="Luis Zermeño"> -->
+                    <span class="about-initials">LZ</span>
+                </div>
+                <div class="about-name">Luis Zermeño Escobedo</div>
+                <div class="about-role">Ingeniero Mecatrónico · Automatización de procesos</div>
+                <div class="about-location"><i data-lucide="map-pin"></i> Puebla, México</div>
+                <a href="https://www.linkedin.com/in/luis-zerme%C3%B1o-escobedo-236016268/" target="_blank" rel="noopener" class="btn btn-secondary about-linkedin">
+                    <i data-lucide="linkedin"></i> Ver perfil en LinkedIn
+                </a>
+            </div>
+
+            <div class="about-text">
+                <div class="about-kicker">Sobre mí</div>
+                <h2>De la línea de producción a la operación de tu negocio</h2>
+                <p>Soy <strong>Ingeniero Mecatrónico</strong>, pero mi carrera me llevó hacia las tecnologías de la información. Me he dedicado a llevar el <strong>control de producción en el sector automotriz</strong>, una industria donde cada dato, cada reporte y cada minuto cuentan.</p>
+                <p>En muchos negocios pequeños y medianos de México veo el mismo problema: no es falta de talento ni de ganas, es <strong>falta de estructura</strong>. Equipos capaces pasan horas copiando datos y armando reportes a mano, porque la automatización todavía se ve como algo lejano, caro o complicado.</p>
+                <p>Mi objetivo es acercarla: soluciones sencillas, hechas a la medida de tu negocio y explicadas en lenguaje claro, para que tu equipo dedique su tiempo a lo que realmente hace crecer la empresa.</p>
+                <p>Trabajo <strong>desde Puebla</strong> con negocios de todo México, de forma remota o en persona.</p>
+
+                <div class="about-pillars">
+                    <div class="pillar">
+                        <i data-lucide="factory"></i>
+                        <h3>Mentalidad industrial</h3>
+                        <p>Procesos medibles, ordenados y sin margen para el error.</p>
+                    </div>
+                    <div class="pillar">
+                        <i data-lucide="search"></i>
+                        <h3>Curiosidad primero</h3>
+                        <p>Antes de programar, entiendo cómo funciona tu negocio.</p>
+                    </div>
+                    <div class="pillar">
+                        <i data-lucide="message-square-text"></i>
+                        <h3>Sin tecnicismos</h3>
+                        <p>Te explico todo en palabras simples, paso a paso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Call to Action Audit -->
         <section id="audit" class="cta-box">
             <h2>¿Cuánto tiempo está perdiendo tu equipo hoy?</h2>
@@ -981,6 +1178,7 @@
             <div class="footer-contact">
                 <a href="mailto:info@luiszer.com">info@luiszer.com</a>
                 <a href="https://wa.me/522221138904" target="_blank" rel="noopener">WhatsApp: +52 222 113 8904</a>
+                <a href="https://www.linkedin.com/in/luis-zerme%C3%B1o-escobedo-236016268/" target="_blank" rel="noopener">LinkedIn</a>
             </div>
             <p>&copy; 2026 Luis Zermeño — Consultoría & Automatización B2B. Todos los derechos reservados.</p>
         </footer>
